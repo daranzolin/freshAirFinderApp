@@ -78,6 +78,10 @@ server <- function(input, output) {
       st_transform(crs = 4326) %>%
       leaflet() %>%
       addPolygons(color = ~pal(AQI_STATUS), stroke = FALSE) %>%
+      addLegend("bottomleft", pal = pal, values = ~AQI_STATUS,
+                title = "AQI",
+                opacity = 1
+      ) %>%
       addProviderTiles(providers$CartoDB.Positron)
   })
 
