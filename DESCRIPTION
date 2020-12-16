@@ -1,0 +1,20 @@
+Package: freshAirFinderApp
+Type: Package
+Title: Find Fresh Air
+Version: 0.1.0
+Author: David Ranzolin
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: Find a bay area location with satisfactory AQI levels.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    shiny,
+    sf,
+    osrm,
+    mapview,
+    stringr,
+    waiter,
+    shinyWidgets,
+    leaflet
+RoxygenNote: 7.1.0
