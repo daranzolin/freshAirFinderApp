@@ -48,6 +48,14 @@ ui <- fluidPage(
                  sliderInput("aqiThreshold", "AQI Threshold:",
                              min = 5, max = 250,
                              value = 40, step = 5),
+                 prettyRadioButtons("osrmProfile", "Method of Travel:",
+                                    icon = icon("route"),
+                                    c("Drive" = "car",
+                                      "Bike" = "bike",
+                                      "Walk" = "foot"),
+                                    animation = "smooth",
+                                    inline = TRUE,
+                                    width = "100%"),
                  actionButton("btn1", "Find Fresh Air",
                               icon = icon("air-freshener"),
                               style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"),
@@ -93,7 +101,13 @@ server <- function(input, output) {
       fresh_locations <- tin_centroids[tin_centroids$AQI <= input$aqiThreshold,]
       distance_to_fresh_locations <- st_distance(start_city, fresh_locations, by_element = TRUE)
       closest <- fresh_locations[which.min(distance_to_fresh_locations),]
-      route <- osrmRoute(src = start_city, dst = closest, overview = "simplified", returnclass = "sf")
+      route <- osrmRoute(
+        src = start_city,
+        dst = closest,
+        overview = "simplified",
+        returnclass = "sf",
+        osrm.profile = input$osrmProfile
+        )
       output$duration <- renderText({
         paste("About", round(route$duration), "minutes")
       })
